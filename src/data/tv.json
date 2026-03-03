@@ -1,0 +1,26 @@
+[
+    {
+        "id": 101,
+        "name": "Samsung 130cm (52 inch) Full HD LED Smart TV",
+        "modal": "UA52T5300AKXXL",
+        "company": "Samsung",
+        "image": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/e349af6e-50c7-40d5-b91a-7cffe10fd440.jpg",
+        "description": "Experience the brilliance of Samsung's 130cm (52 inch) Full HD LED Smart TV. With its stunning display and smart features, this TV offers an immersive viewing experience. Enjoy your favorite shows and movies in vibrant colors and sharp details. The sleek design adds a touch of elegance to your living space. Upgrade your entertainment setup with Samsung's cutting-edge technology and enjoy endless hours of entertainment."
+    },
+    {
+        "id": 102,
+        "name": "Sony 130cm (52 inch) Full HD LED Smart TV",
+        "modal": "X9000H",
+        "company": "Sony",
+        "image": "https://m.media-amazon.com/images/I/71s+qj8n9lL._SL1500_.jpg",
+        "description": "Discover the Sony 130cm (52 inch) Full HD LED Smart TV, a perfect blend of style and performance. With its impressive display and smart capabilities, this TV delivers an immersive viewing experience. Enjoy your favorite content in stunning clarity and vibrant colors. The sleek design adds a modern touch to your living space. Upgrade your entertainment setup with Sony's advanced technology and enjoy endless hours of entertainment."
+    },
+    {
+        "id": 103,
+        "name": "LG 130cm (52 inch) Full HD LED Smart TV",
+        "modal": "OLED52C1PUB",
+        "company": "LG",
+        "image": "https://m.media-amazon.com/images/I/91ac8+fwNOL._AC_SL1500_.jpg",
+        "description": "Experience the brilliance of LG's 130cm (52 inch) Full HD LED Smart TV. With its stunning display and smart features, this TV offers an immersive viewing experience. Enjoy your favorite shows and movies in vibrant colors and sharp details. The sleek design adds a touch of elegance to your living space. Upgrade your entertainment setup with LG's cutting-edge technology and enjoy endless hours of entertainment."
+    }
+]
