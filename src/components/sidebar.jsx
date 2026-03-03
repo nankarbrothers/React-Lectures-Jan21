@@ -7,14 +7,18 @@ function SideBar() {
         <Col md={4}>
         <Card className="shadow-sm">
             <Card.Body>
-              <Card.Title>Sidebar</Card.Title>
+              <Card.Title>React Course</Card.Title>
               <Card.Text>
-                  This is a sidebar section.
+                  This is a full stack React course using Bootstrap for styling and layout.
               </Card.Text>
               <ul>
-                <li>Home</li>
-                <li>About</li>
-                <li>Contact</li>
+                <li className="">React Introduction</li>
+                <li>React Folder Structure</li>
+                <li>React project on Github</li>
+                <li>React Bootstrap</li>
+                <li>React Router</li>
+                <li>React Forms</li>
+                <li>React State Management</li>
               </ul>
             </Card.Body>
         </Card>

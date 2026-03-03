@@ -1,4 +1,4 @@
-import { Container, Row, Col, Navbar, Nav, Button, Card } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import SideBar from "./sidebar.jsx";
 import Section from "./section.jsx";
 
