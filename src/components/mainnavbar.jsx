@@ -1,10 +1,6 @@
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Button, Container, Form, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import CustomSearchBar from './molecules/searchbar.jsx';
 
 function MainNavbar() {
   return (
@@ -34,16 +30,8 @@ function MainNavbar() {
             <Nav.Link href="#" disabled>
               Link
             </Nav.Link>
-          </Nav>
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form>
+          </Nav>  
+          <CustomSearchBar onSearch={(value) => alert("Search clicked: " + value)} />        
         </Navbar.Collapse>
       </Container>
     </Navbar>
