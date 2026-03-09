@@ -4,10 +4,13 @@ import SideBar from "../sidebar.jsx";
 import { getProducts } from '../../services/product.jsx'; 
 import CustomButton from '../atoms/button.jsx';
 import CustomCheckbox from '../atoms/checkbox.jsx';
+import TvModal from '../organisms/tvmodal.jsx';
 
 function List() {
   const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [show, setShow] = useState(false);
 
 
    // Select All
@@ -45,17 +48,42 @@ function List() {
   }, [selectedRows]);
 
   const editRecord = (id) => {
-    console.log("Edit record with ID:", id);
+    setShow(true);
+    const productToEdit = products.find((product) => product.id === id);
+    console.log("Edit record with ID:", productToEdit);
+    setProduct(productToEdit);
     // Implement edit functionality here
   }
 
+  const saveChanges = (updatedTv) => {
+    setProducts(products.map(p => p.id === updatedTv.id ? updatedTv : p));
+    setShow(false);
+  }
+
+  const downloadJson = () => {
+    const dataStr = JSON.stringify(products, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    const exportFileDefaultName = 'tv.json';
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+  }
+
   const deleteRecord = (id) => {
-    console.log("Delete record with ID:", id);
-    // Implement delete functionality here
+    setProducts(products.filter(p => p.id !== id));
   }
 
   return (
     <>
+    <TvModal
+      tv={product}
+      show={show}
+      handleClose={() => setShow(false)}
+      saveChanges={saveChanges}
+    />
        <Container className="mt-4">
         <Row>
           <SideBar />
@@ -63,6 +91,8 @@ function List() {
             <Container className="mt-8">
                 <h1>CRUD Operations</h1>
                 <p>This is the CRUD operations page. Here you can manage your data with Create, Read, Update, and Delete functionalities.</p>
+                <CustomButton label="Download JSON" variant="success" onClick={downloadJson} />
+                <br /><br />
                 <Table striped bordered hover>
                   <thead>
                     <tr>
@@ -87,9 +117,9 @@ function List() {
                         <td>{product.modal}</td>
                         <td>{product.company}</td>
                         <td>
-                          <CustomButton label="Edit" variant="primary" onClick={editRecord} />
+                          <CustomButton label="Edit" variant="primary" onClick={() => editRecord(product.id)} />
                           &nbsp;
-                          <CustomButton label="Delete" variant="danger" onClick={deleteRecord} />
+                          <CustomButton label="Delete" variant="danger" onClick={() => deleteRecord(product.id) } />
                         </td>
                       </tr>
                     ))}
