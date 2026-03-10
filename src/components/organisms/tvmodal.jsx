@@ -4,28 +4,37 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
-function TvModal({ tv, show, handleClose, saveChanges }) {
+function TvModal({ tv, currentOperation, show, handleClose, saveChanges }) {
   const [formData, setFormData] = useState({ id: '', name: '', modal: '', company: '', image: '', description: '' });
+  let modalTitle =  'Edit TV Details';
+  let saveButtonLabel = 'Update TV';
+  if(currentOperation === 'add') {
+    modalTitle =  'Add New TV';
+    saveButtonLabel = 'Add TV';
+  }
 
   useEffect(() => {
     if (tv) {
       setFormData(tv);
+    } else {
+      // Reset form when adding a new record
+      setFormData({ id: '', name: '', modal: '', company: '', image: '', description: '' });
     }
-  }, [tv]);
+  }, [tv, currentOperation]);
 
   const handleInputChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
 
   const handleSave = () => {
-    saveChanges(formData);
+    saveChanges(formData, currentOperation);
   };
 
   return (
     <>
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit TV Details</Modal.Title>
+          <Modal.Title>{modalTitle}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <InputGroup className="mb-3">
@@ -102,7 +111,7 @@ function TvModal({ tv, show, handleClose, saveChanges }) {
             Close
           </Button>
           <Button variant="primary" onClick={handleSave}>
-            Save Changes
+            {saveButtonLabel}
           </Button>
         </Modal.Footer>
       </Modal>

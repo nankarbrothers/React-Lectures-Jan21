@@ -1,5 +1,5 @@
 import Container from 'react-bootstrap/Container';
-import List from '../components/crud/list.jsx';
+import List from '../components/templates/list.jsx';
 
 function Crud() {
   return (

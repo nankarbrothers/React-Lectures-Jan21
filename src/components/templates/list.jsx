@@ -5,12 +5,14 @@ import { getProducts } from '../../services/product.jsx';
 import CustomButton from '../atoms/button.jsx';
 import CustomCheckbox from '../atoms/checkbox.jsx';
 import TvModal from '../organisms/tvmodal.jsx';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 function List() {
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
   const [show, setShow] = useState(false);
+  const [currentOperation, setCurrentOperation] = useState('add');
 
 
    // Select All
@@ -43,20 +45,27 @@ function List() {
       });
   }, []);
   
-  useEffect(() => {
-    console.log("Selected Rows:", selectedRows);
-  }, [selectedRows]);
-
   const editRecord = (id) => {
     setShow(true);
+    setCurrentOperation('edit');
     const productToEdit = products.find((product) => product.id === id);
-    console.log("Edit record with ID:", productToEdit);
     setProduct(productToEdit);
-    // Implement edit functionality here
   }
 
-  const saveChanges = (updatedTv) => {
-    setProducts(products.map(p => p.id === updatedTv.id ? updatedTv : p));
+  const addRecord = () => {
+    setShow(true);
+    setCurrentOperation('add');
+    setProduct(null);
+  }
+
+  const saveChanges = (updatedTv, currentOperation) => {
+    if(currentOperation === 'add') {
+      updatedTv.id = products.length > 0 ? products[products.length-1].id + 1 : 101;
+      setProducts([...products, updatedTv]);
+    }
+    else {
+      setProducts(products.map(p => p.id === updatedTv.id ? updatedTv : p));
+    }
     setShow(false);
   }
 
@@ -76,14 +85,30 @@ function List() {
     setProducts(products.filter(p => p.id !== id));
   }
 
+  const deleteMultiRecord = () => {
+    console.log('Selected Rows for deletion:', selectedRows);
+    setProducts(products.filter(p => !selectedRows.includes(p.id)));
+    setSelectedRows([]);
+  };
+
+  const handleDropdownAction = (eventKey) => {
+    if (eventKey === "1") {
+      deleteMultiRecord();
+    } else if (eventKey === "2") {
+      // Handle edit for selected rows
+      console.log('Edit selected rows:', selectedRows);
+    }
+  };
+
   return (
     <>
-    <TvModal
-      tv={product}
-      show={show}
-      handleClose={() => setShow(false)}
-      saveChanges={saveChanges}
-    />
+      <TvModal
+        tv={product}
+        currentOperation={currentOperation}
+        show={show}
+        handleClose={() => setShow(false)}
+        saveChanges={saveChanges}
+      />
        <Container className="mt-4">
         <Row>
           <SideBar />
@@ -91,13 +116,19 @@ function List() {
             <Container className="mt-8">
                 <h1>CRUD Operations</h1>
                 <p>This is the CRUD operations page. Here you can manage your data with Create, Read, Update, and Delete functionalities.</p>
-                <CustomButton label="Download JSON" variant="success" onClick={downloadJson} />
+                <div style={{ float: 'left' }}>
+                  <CustomButton label="Download JSON" variant="success" onClick={downloadJson} />
+                </div>
+
+                <div style={{ float: 'right' }}>
+                  <CustomButton label="Add Record" variant="primary" onClick={() => addRecord()} />
+                </div>
                 <br /><br />
                 <Table striped bordered hover>
                   <thead>
                     <tr>
                       <th>
-                        <CustomCheckbox label="Select All" checked={selectedRows.length === products.length} onChange={handleSelectAll} />
+                        <CustomCheckbox label="Select All" checked={selectedRows.length === products.length && products.length > 0} onChange={handleSelectAll} />
                       </th>
                       <th>ID</th>
                       <th>Name</th>
@@ -125,6 +156,17 @@ function List() {
                     ))}
                   </tbody>
                 </Table>
+                
+                <Dropdown onSelect={handleDropdownAction}>
+                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    Actions
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item eventKey="1">Delete</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+                
             </Container>
           </Col>
         </Row>
